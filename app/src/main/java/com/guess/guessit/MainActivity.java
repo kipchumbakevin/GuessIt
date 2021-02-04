@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
         fetchUser();
-        countDownTimer = new CountDownTimer(10000, 1000) { // 10 seconds, in 1 second intervals
+        countDownTimer = new CountDownTimer(60000, 1000) { // 10 seconds, in 1 second intervals
             public void onTick(long millisUntilFinished) {
                 if (!interstitialAd.isAdLoaded()){
                     interstitialAd.loadAd(
@@ -233,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     if (interstitialAd.isAdLoaded()){
                         interstitialAd.show();
                     }
+                    fetchUser2();
                     countDownTimer.start();
                     Toast.makeText(MainActivity.this, "You have been awarded 2 coins", Toast.LENGTH_SHORT).show();
                 } else {
@@ -248,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void fetchUser() {
         progressBar.setVisibility(View.VISIBLE);
@@ -279,6 +281,30 @@ public class MainActivity extends AppCompatActivity {
                 reload.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+    public void fetchUser2() {
+        String us = sharedPreferencesConfig.readClientsPhone();
+        Call<UsersModel> call = RetrofitClient.getInstance(MainActivity.this)
+                .getApiConnector()
+                .fetchUser(us);
+        call.enqueue(new Callback<UsersModel>() {
+            @Override
+            public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().getPoints()>11) {
+                        message.setVisibility(View.VISIBLE);
+                    }
+                    myPoints.setText(response.body().getPoints() + "");
+                    myPoints.setVisibility(View.VISIBLE);
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UsersModel> call, Throwable t) {
             }
 
         });
@@ -360,7 +386,13 @@ public class MainActivity extends AppCompatActivity {
         if (interstitialAd != null){
             interstitialAd.destroy();
         }
+        countDownTimer.cancel();
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        countDownTimer.cancel();
+        super.onBackPressed();
+    }
 }

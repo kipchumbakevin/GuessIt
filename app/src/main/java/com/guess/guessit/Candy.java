@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,9 +57,10 @@ public class Candy extends AppCompatActivity {
     private AdView adView,adV;
     private InterstitialAd interstitialAd;
     SharedPreferencesConfig sharedPreferencesConfig;
-    MediaPlayer mediaPlayerCrush;
+    MediaPlayer mediaPlayerCrush,silent;
     int score = 0;
     int widthOfBlock, noOfBlocks = 8, widthOfScreen;
+    Switch sound;
     ArrayList<ImageView> candy = new ArrayList<>();
     TextView scoreR, timer;
     InterstitialAdListener interstitialAdListener;
@@ -71,6 +73,7 @@ public class Candy extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         startScore = 0;
         back = 0;
+        sound = findViewById(R.id.sound);
         widthOfScreen = displayMetrics.widthPixels;
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
         timer = findViewById(R.id.timer);
@@ -168,7 +171,9 @@ public class Candy extends AppCompatActivity {
                             }
                         }.start();
                     }
-                    mediaPlayerSwipe.start();
+                    if (sound.isChecked()){
+                        mediaPlayerSwipe.start();
+                    }
                     startScore = 1;
                     candyToBeDragged = imageView.getId();
                     candyToBeReplaced = candyToBeDragged + 1;
@@ -193,7 +198,9 @@ public class Candy extends AppCompatActivity {
                             }
                         }.start();
                     }
-                    mediaPlayerSwipe.start();
+                    if (sound.isChecked()){
+                        mediaPlayerSwipe.start();
+                    }
                     startScore = 1;
                     candyToBeDragged = imageView.getId();
                     candyToBeReplaced = candyToBeDragged - 1;
@@ -218,7 +225,9 @@ public class Candy extends AppCompatActivity {
                             }
                         }.start();
                     }
-                    mediaPlayerSwipe.start();
+                    if (sound.isChecked()){
+                        mediaPlayerSwipe.start();
+                    }
                     startScore = 1;
                     candyToBeDragged = imageView.getId();
                     candyToBeReplaced = candyToBeDragged - noOfBlocks;
@@ -243,7 +252,9 @@ public class Candy extends AppCompatActivity {
                             }
                         }.start();
                     }
-                    mediaPlayerSwipe.start();
+                    if (sound.isChecked()){
+                        mediaPlayerSwipe.start();
+                    }
                     startScore = 1;
                     candyToBeDragged = imageView.getId();
                     candyToBeReplaced = candyToBeDragged + noOfBlocks;
@@ -266,7 +277,9 @@ public class Candy extends AppCompatActivity {
                     int x = i;
                     if ((int) candy.get(x++).getTag() == choosedCandy && !isBlank && (int) candy.get(x++).getTag() == choosedCandy &&
                             (int) candy.get(x).getTag() == choosedCandy) {
-                        mediaPlayerCrush.start();
+                        if (sound.isChecked()){
+                            mediaPlayerCrush.start();
+                        }
                         if (startScore == 1) {
                             score = score + 6;
                             scoreR.setText(String.valueOf(score));
@@ -295,7 +308,9 @@ public class Candy extends AppCompatActivity {
                 if ((int) candy.get(x).getTag() == choosedCandy && !isBlank &&
                         (int) candy.get(x + noOfBlocks).getTag() == choosedCandy &&
                         (int) candy.get(x + 2 * noOfBlocks).getTag() == choosedCandy) {
-                    mediaPlayerCrush.start();
+                    if (sound.isChecked()){
+                        mediaPlayerCrush.start();
+                    }
                     if (startScore == 1) {
                         score = score + 6;
                         scoreR.setText(String.valueOf(score));

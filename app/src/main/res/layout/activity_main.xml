@@ -28,11 +28,8 @@
         android:text="Play and Earn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:drawableEnd="@drawable/ic_money"
         android:drawableStart="@drawable/ic_money"
-        android:gravity="center"
-        android:drawableBottom="@drawable/ic_money"
-        android:drawableTop="@drawable/ic_money"/>
+        android:gravity="center"/>
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="30dp"
@@ -140,6 +137,7 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/countdown"
         android:src="@drawable/ic_message"

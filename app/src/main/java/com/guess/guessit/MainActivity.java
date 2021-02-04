@@ -104,10 +104,6 @@ public class MainActivity extends AppCompatActivity {
                         interstitialAd.buildLoadAdConfig()
                                 .withAdListener(interstitialAdListener)
                                 .build());
-                if (freeCoins == 1){
-                    getFree();
-                }
-
 
             }
 
@@ -172,13 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        if (!interstitialAd.isAdLoaded()){
-            interstitialAd.loadAd(
-                    interstitialAd.buildLoadAdConfig()
-                            .withAdListener(interstitialAdListener)
-                            .build());
-            free.setEnabled(true);
-        }
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,10 +177,7 @@ public class MainActivity extends AppCompatActivity {
         free.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                freeCoins = 1;
-                if (interstitialAd.isAdLoaded()){
-                    interstitialAd.show();
-                }
+                getFree();
             }
         });
         guessing.setOnClickListener(new View.OnClickListener() {
@@ -235,13 +221,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFree() {
         String us = sharedPreferencesConfig.readClientsPhone();
+        progressBar.setVisibility(View.VISIBLE);
         Call<MessagesModel> call = RetrofitClient.getInstance(MainActivity.this)
                 .getApiConnector()
                 .free(us);
         call.enqueue(new Callback<MessagesModel>() {
             @Override
             public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 201) {
+                    if (interstitialAd.isAdLoaded()){
+                        interstitialAd.show();
+                    }
                     countDownTimer.start();
                     Toast.makeText(MainActivity.this, "You have been awarded 2 coins", Toast.LENGTH_SHORT).show();
                 } else {
@@ -252,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MessagesModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Network error. Check connection", Toast.LENGTH_LONG).show();
             }
         });
@@ -270,7 +262,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    myPoints.setText(response.body().getPoints()+"");
+                    if (response.body().getPoints()>11) {
+                        message.setVisibility(View.VISIBLE);
+                    }
+                    myPoints.setText(response.body().getPoints() + "");
                     myPoints.setVisibility(View.VISIBLE);
                     come();
                 } else {

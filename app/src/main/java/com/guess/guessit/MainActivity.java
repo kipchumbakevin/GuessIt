@@ -333,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
         free.setVisibility(View.GONE);
         countdown.setVisibility(View.GONE);
         info.setVisibility(View.GONE);
+        message.setVisibility(View.GONE);
     }
     private void come() {
         candy.setVisibility(View.VISIBLE);
@@ -340,6 +341,7 @@ public class MainActivity extends AppCompatActivity {
         free.setVisibility(View.VISIBLE);
         countdown.setVisibility(View.VISIBLE);
         info.setVisibility(View.VISIBLE);
+        message.setVisibility(View.VISIBLE);
     }
 
     private void requestInfo() {

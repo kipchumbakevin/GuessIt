@@ -151,6 +151,19 @@ public class Candy extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
+        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
+            public void onTick(long millisUntilFinished) {
+                timer.setVisibility(View.VISIBLE);
+                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup Game with Cards trials for free");
+            }
+
+            public void onFinish() {
+                alertD();
+                timer.setVisibility(View.GONE);
+                score = 0;
+                scoreR.setText("");
+            }
+        };
         createBoard();
         for (final ImageView imageView : candy) {
             imageView.setOnTouchListener(new OnSwipeListener(this) {
@@ -158,19 +171,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeRight() {
                     super.onSwipeRight();
                     if (!timer.isShown()) {
-                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
-                            public void onTick(long millisUntilFinished) {
-                                timer.setVisibility(View.VISIBLE);
-                                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup Game with Cards trials for free");
-                            }
-
-                            public void onFinish() {
-                                alertD();
-                                timer.setVisibility(View.GONE);
-                                score = 0;
-                                scoreR.setText("");
-                            }
-                        }.start();
+                        countDownTimer.start();
                     }
                     if (sound.isChecked()){
                         mediaPlayerSwipe.start();
@@ -185,19 +186,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeLeft() {
                     super.onSwipeLeft();
                     if (!timer.isShown()) {
-                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
-                            public void onTick(long millisUntilFinished) {
-                                timer.setVisibility(View.VISIBLE);
-                                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup game with cards trials for free");
-                            }
-
-                            public void onFinish() {
-                                alertD();
-                                timer.setVisibility(View.GONE);
-                                score = 0;
-                                scoreR.setText("");
-                            }
-                        }.start();
+                        countDownTimer.start();
                     }
                     if (sound.isChecked()){
                         mediaPlayerSwipe.start();
@@ -212,19 +201,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeTop() {
                     super.onSwipeTop();
                     if (!timer.isShown()) {
-                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
-                            public void onTick(long millisUntilFinished) {
-                                timer.setVisibility(View.VISIBLE);
-                                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup game with cards trials for free");
-                            }
-
-                            public void onFinish() {
-                                alertD();
-                                timer.setVisibility(View.GONE);
-                                score = 0;
-                                scoreR.setText("");
-                            }
-                        }.start();
+                        countDownTimer.start();
                     }
                     if (sound.isChecked()){
                         mediaPlayerSwipe.start();
@@ -239,19 +216,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeBottom() {
                     super.onSwipeBottom();
                     if (!timer.isShown()) {
-                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
-                            public void onTick(long millisUntilFinished) {
-                                timer.setVisibility(View.VISIBLE);
-                                timer.setText("Get a score of 250 in " + millisUntilFinished / 1000 + " secs" + " 1 coin");
-                            }
-
-                            public void onFinish() {
-                                alertD();
-                                timer.setVisibility(View.GONE);
-                                score = 0;
-                                scoreR.setText("");
-                            }
-                        }.start();
+                        countDownTimer.start();
                     }
                     if (sound.isChecked()){
                         mediaPlayerSwipe.start();

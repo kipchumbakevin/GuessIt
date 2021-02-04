@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">GuessIt</string>
+    <string name="SHARED_PREFERENCES">com.donate.donate.utils.sharedpref</string>
+    <string name="CLIENTS_PHONE">com.donate.donate.utils.sharedpref.phone</string>
+    //
+    <string name="CLIENTS_NAME">com.fundraiser.fundraiser.utils.sharedpref.name</string>
+
+
+
+    <string name="banner">IMG_16_9_APP_INSTALL#239889781062603_239891304395784</string>
+    <string name="interstitial">IMG_16_9_APP_INSTALL#239889781062603_239890431062538</string>
+<!--    <string name="rectangle">IMG_16_9_APP_INSTALL#239889781062603_239892134395701</string>-->
+</resources>

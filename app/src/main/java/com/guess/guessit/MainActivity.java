@@ -48,7 +48,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView candy,guessing,countdown,free,myPoints;
+    TextView candy,guessing,countdown,free,myPoints,info;
     ImageView message;
     private AdView adViewb,adV;
     private InterstitialAd interstitialAd;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     Button reload;
     private LinearLayout adView;
-    int freeCoins;
+    int freeCoins,coins;
     CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         guessing = findViewById(R.id.guessing);
         countdown = findViewById(R.id.countdown);
         message = findViewById(R.id.message);
+        info = findViewById(R.id.info);
         myPoints = findViewById(R.id.mycoins);
         progressBar = findViewById(R.id.progress);
         reload = findViewById(R.id.reload);
@@ -199,22 +200,42 @@ public class MainActivity extends AppCompatActivity {
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder al = new AlertDialog.Builder(MainActivity.this);
-                View view1 = getLayoutInflater().inflate(R.layout.message,null);
-                al.setTitle("Earnings")
-                        .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if (interstitialAd.isAdLoaded()){
-                                    interstitialAd.show();
+                if (coins < 200) {
+                    AlertDialog.Builder al = new AlertDialog.Builder(MainActivity.this);
+                    al.setTitle("Earnings")
+                            .setMessage("Once you get 200 coins,click on the message icon and you will get the instructions")
+                            .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
+                                    if (interstitialAd.isAdLoaded()) {
+                                        interstitialAd.show();
+                                    }
+                                    dialogInterface.dismiss();
                                 }
-                                dialogInterface.dismiss();
-                            }
-                        });
-                al.setView(view1);
-                AlertDialog alertDialog = al.create();
-                alertDialog.setCancelable(false);
-                alertDialog.show();
+                            });
+                    AlertDialog alertDialog = al.create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.show();
+                } else {
+                    AlertDialog.Builder al = new AlertDialog.Builder(MainActivity.this);
+                    View view1 = getLayoutInflater().inflate(R.layout.message, null);
+                    al.setTitle("Earnings")
+                            .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
+                                    if (interstitialAd.isAdLoaded()) {
+                                        interstitialAd.show();
+                                    }
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                    al.setView(view1);
+                    AlertDialog alertDialog = al.create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.show();
+                }
             }
         });
     }
@@ -264,9 +285,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    if (response.body().getPoints()>11) {
-                        message.setVisibility(View.VISIBLE);
-                    }
+                    coins = response.body().getPoints();
                     myPoints.setText(response.body().getPoints() + "");
                     myPoints.setVisibility(View.VISIBLE);
                     come();
@@ -294,9 +313,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().getPoints()>11) {
-                        message.setVisibility(View.VISIBLE);
-                    }
+                    message.setVisibility(View.VISIBLE);
                     myPoints.setText(response.body().getPoints() + "");
                     myPoints.setVisibility(View.VISIBLE);
                 } else {
@@ -315,12 +332,14 @@ public class MainActivity extends AppCompatActivity {
         guessing.setVisibility(View.GONE);
         free.setVisibility(View.GONE);
         countdown.setVisibility(View.GONE);
+        info.setVisibility(View.GONE);
     }
     private void come() {
         candy.setVisibility(View.VISIBLE);
         guessing.setVisibility(View.VISIBLE);
         free.setVisibility(View.VISIBLE);
         countdown.setVisibility(View.VISIBLE);
+        info.setVisibility(View.VISIBLE);
     }
 
     private void requestInfo() {

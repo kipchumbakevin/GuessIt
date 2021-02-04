@@ -63,6 +63,7 @@ public class Candy extends AppCompatActivity {
     Switch sound;
     ArrayList<ImageView> candy = new ArrayList<>();
     TextView scoreR, timer;
+    CountDownTimer countDownTimer;
     InterstitialAdListener interstitialAdListener;
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -157,7 +158,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeRight() {
                     super.onSwipeRight();
                     if (!timer.isShown()) {
-                        new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
+                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
                             public void onTick(long millisUntilFinished) {
                                 timer.setVisibility(View.VISIBLE);
                                 timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup Game with Cards trials for free");
@@ -184,7 +185,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeLeft() {
                     super.onSwipeLeft();
                     if (!timer.isShown()) {
-                        new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
+                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
                             public void onTick(long millisUntilFinished) {
                                 timer.setVisibility(View.VISIBLE);
                                 timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup game with cards trials for free");
@@ -211,7 +212,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeTop() {
                     super.onSwipeTop();
                     if (!timer.isShown()) {
-                        new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
+                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
                             public void onTick(long millisUntilFinished) {
                                 timer.setVisibility(View.VISIBLE);
                                 timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup game with cards trials for free");
@@ -238,7 +239,7 @@ public class Candy extends AppCompatActivity {
                 void onSwipeBottom() {
                     super.onSwipeBottom();
                     if (!timer.isShown()) {
-                        new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
+                        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
                             public void onTick(long millisUntilFinished) {
                                 timer.setVisibility(View.VISIBLE);
                                 timer.setText("Get a score of 250 in " + millisUntilFinished / 1000 + " secs" + " 1 coin");
@@ -373,7 +374,7 @@ public class Candy extends AppCompatActivity {
 
     private void alertD() {
         String failed, title;
-        if (score > 100) {
+        if (score > 200) {
             if (!interstitialAd.isAdLoaded()) {
                 interstitialAd.loadAd(
                         interstitialAd.buildLoadAdConfig()
@@ -396,7 +397,7 @@ public class Candy extends AppCompatActivity {
         final int ss = score;
         alert.setTitle(title)
                 .setMessage(failed);
-        if (ss > 100) {
+        if (ss > 200) {
             alert.setPositiveButton("Claim", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialogInterface, int i) {
@@ -405,6 +406,7 @@ public class Candy extends AppCompatActivity {
             alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
                     if (interstitialAd.isAdLoaded()){
                         interstitialAd.show();
                     }
@@ -415,6 +417,7 @@ public class Candy extends AppCompatActivity {
             alert.setNegativeButton("Retry", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
                     if (interstitialAd.isAdLoaded()){
                         interstitialAd.show();
                     }
@@ -429,7 +432,7 @@ public class Candy extends AppCompatActivity {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ss > 100) {
+                if (ss > 200) {
                     final Toast toast = new Toast(Candy.this);
                     toast.makeText(Candy.this, "Loading...", Toast.LENGTH_LONG).show();
                     String us = sharedPreferencesConfig.readClientsPhone();
@@ -495,6 +498,7 @@ public class Candy extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -507,6 +511,8 @@ public class Candy extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         back = 1;
+        countDownTimer.cancel();
+        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){
             interstitialAd.show();
         }else {

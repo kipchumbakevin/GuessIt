@@ -11,7 +11,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/colorPrimary"
-        android:text="Follow us on instagram and send us your username and payment details. We will verify your details and get back to you.\nHere is our link"
+        android:text="Follow us on instagram @guessit_game and send us your username and payment details. We will verify your details and get back to you.\nNB: The first 1000 people to get 100 coins will be paid. The rest will be paid after getting 200 coins"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

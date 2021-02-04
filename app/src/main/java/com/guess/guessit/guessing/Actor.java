@@ -221,6 +221,7 @@ public class Actor extends AppCompatActivity {
                 .setPositiveButton("Done", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
                         if (interstitialAd.isAdLoaded()){
                             interstitialAd.show();
                         }
@@ -238,6 +239,7 @@ public class Actor extends AppCompatActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
                         if (interstitialAd.isAdLoaded()){
                             interstitialAd.show();
                         }
@@ -278,6 +280,7 @@ public class Actor extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         back = 1;
+        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){
             interstitialAd.show();
         }else {

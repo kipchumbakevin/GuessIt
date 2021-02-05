@@ -3,8 +3,10 @@ package com.guess.guessit;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -48,7 +50,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView candy,guessing,countdown,free,myPoints,info;
+    TextView candy,guessing,countdown,free,myPoints,info,policy;
     ImageView message;
     private AdView adViewb,adV;
     private InterstitialAd interstitialAd;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         guessing = findViewById(R.id.guessing);
         countdown = findViewById(R.id.countdown);
         message = findViewById(R.id.message);
+        policy = findViewById(R.id.privacy);
         info = findViewById(R.id.info);
         myPoints = findViewById(R.id.mycoins);
         progressBar = findViewById(R.id.progress);
@@ -154,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onFinish() {
                 free.setEnabled(true);
-                free.setText("Free coins");
+                free.setText("Free coin");
             }
         };
 
@@ -200,24 +203,6 @@ public class MainActivity extends AppCompatActivity {
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (coins < 200) {
-                    AlertDialog.Builder al = new AlertDialog.Builder(MainActivity.this);
-                    al.setTitle("Earnings")
-                            .setMessage("Once you get 200 coins,click on the message icon and you will get the instructions")
-                            .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
-                                    if (interstitialAd.isAdLoaded()) {
-                                        interstitialAd.show();
-                                    }
-                                    dialogInterface.dismiss();
-                                }
-                            });
-                    AlertDialog alertDialog = al.create();
-                    alertDialog.setCancelable(false);
-                    alertDialog.show();
-                } else {
                     AlertDialog.Builder al = new AlertDialog.Builder(MainActivity.this);
                     View view1 = getLayoutInflater().inflate(R.layout.message, null);
                     al.setTitle("Earnings")
@@ -235,6 +220,23 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog alertDialog = al.create();
                     alertDialog.setCancelable(false);
                     alertDialog.show();
+                }
+        });
+        policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://lovidovi.co.ke/guess");
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://lovidovi.co.ke/guess")));
                 }
             }
         });
@@ -334,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
         countdown.setVisibility(View.GONE);
         info.setVisibility(View.GONE);
         message.setVisibility(View.GONE);
+        policy.setVisibility(View.GONE);
     }
     private void come() {
         candy.setVisibility(View.VISIBLE);
@@ -342,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
         countdown.setVisibility(View.VISIBLE);
         info.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
+        policy.setVisibility(View.VISIBLE);
     }
 
     private void requestInfo() {

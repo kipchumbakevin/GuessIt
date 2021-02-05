@@ -154,7 +154,7 @@ public class Candy extends AppCompatActivity {
         countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
             public void onTick(long millisUntilFinished) {
                 timer.setVisibility(View.VISIBLE);
-                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 3 Cup Game with Cards trials for free");
+                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 1 coin");
             }
 
             public void onFinish() {
@@ -410,7 +410,7 @@ public class Candy extends AppCompatActivity {
                             if (response.code() == 201) {
                                 toast.cancel();
                                 alertDialog.dismiss();
-                                Toast.makeText(Candy.this, "You have been awarded 2 coins", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Candy.this, "You have been awarded 1 coin", Toast.LENGTH_SHORT).show();
                             } else {
                                 toast.cancel();
                                 Toast.makeText(Candy.this, "Server error", Toast.LENGTH_SHORT).show();
@@ -472,7 +472,6 @@ public class Candy extends AppCompatActivity {
         }
         super.onDestroy();
     }
-
     @Override
     public void onBackPressed() {
         back = 1;

@@ -25,7 +25,7 @@
         android:id="@+id/zz"
         android:textColor="@color/gold"
         android:textSize="20sp"
-        android:text="Play and Earn"
+        android:text="Guess Play Earn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:drawableStart="@drawable/ic_money"
@@ -122,7 +122,7 @@
         android:background="@color/gold"/>
     <TextView
         android:id="@+id/free"
-        android:text="Free coins"
+        android:text="Free coin"
         android:padding="5dp"
         android:gravity="center"
         android:layout_marginTop="20dp"
@@ -135,7 +135,7 @@
         app:layout_constraintTop_toBottomOf="@id/countdown"/>
     <TextView
         android:id="@+id/info"
-        android:text="For every 100 coins you get, you will receive $10. The minimum cash out coins are 200.\nNB:You are not required to deposit or send any money anywhere. BEWARE"
+        android:text="For every 100 coins you get, you will receive $1. The minimum cash out coins are 200.\nNB:You are not required to deposit or send any money anywhere. BEWARE"
         android:padding="5dp"
         android:gravity="center"
         android:textSize="12sp"
@@ -145,6 +145,18 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/free"/>
+    <TextView
+        android:id="@+id/privacy"
+        android:text="Privacy Policy"
+        android:padding="5dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info"/>
     <ImageView
         android:id="@+id/message"
         android:layout_width="wrap_content"
@@ -153,6 +165,7 @@
         app:layout_constraintTop_toBottomOf="@id/countdown"
         android:src="@drawable/ic_message"
         android:layout_marginTop="20dp"/>
+
 <!--    <com.facebook.ads.NativeAdLayout-->
 <!--        app:layout_constraintTop_toBottomOf="@id/free"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->

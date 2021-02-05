@@ -278,10 +278,6 @@ public class AnswerQuestion extends AppCompatActivity {
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
-                                            if (interstitialAd.isAdLoaded()){
-                                                interstitialAd.show();
-                                            }
                                             dialogInterface.dismiss();
                                         }
                                     });

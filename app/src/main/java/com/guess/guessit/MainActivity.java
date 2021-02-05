@@ -209,10 +209,6 @@ public class MainActivity extends AppCompatActivity {
                             .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
-                                    if (interstitialAd.isAdLoaded()) {
-                                        interstitialAd.show();
-                                    }
                                     dialogInterface.dismiss();
                                 }
                             });

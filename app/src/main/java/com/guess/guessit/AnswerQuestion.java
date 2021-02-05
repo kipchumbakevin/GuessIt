@@ -167,14 +167,8 @@ public class AnswerQuestion extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         t = 1;
-                                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
-                                        if (interstitialAd.isAdLoaded()){
-                                            dialogInterface.dismiss();
-                                            interstitialAd.show();
-                                        }else {
                                             dialogInterface.dismiss();
                                             timer();
-                                        }
                                     }
                                 });
                         AlertDialog alertDialog = aler.create();
@@ -229,10 +223,6 @@ public class AnswerQuestion extends AppCompatActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
-                        if (interstitialAd.isAdLoaded()){
-                            interstitialAd.show();
-                        }
                         dialogInterface.dismiss();
                     }
                 });

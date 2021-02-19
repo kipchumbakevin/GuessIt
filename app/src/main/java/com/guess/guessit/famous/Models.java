@@ -40,7 +40,7 @@ public class Models extends AppCompatActivity {
     EditText edit1,edit2,edit3,edit4;
     ScrollView scrollView;
     String ans1,ans1a,ans2,ans2a,ans3,ans3a,ans4,ans4a,ed1,ed2,ed3,ed4;
-    private AdView adView,adV;
+    private AdView adView;
     int back;
     private InterstitialAd interstitialAd;
     InterstitialAdListener interstitialAdListener;
@@ -70,19 +70,15 @@ public class Models extends AppCompatActivity {
 
         AudienceNetworkAds.initialize(this);
         adView = new AdView(this, getString(R.string.banner), AdSize.BANNER_HEIGHT_50);
-        adV = new AdView(this,getString(R.string.banner),AdSize.BANNER_HEIGHT_50);
 
         // Find the Ad Container
         LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
-        LinearLayout adC = (LinearLayout) findViewById(R.id.banner);
 
         // Add the ad view to your activity layout
         adContainer.addView(adView);
-        adC.addView(adV);
 
         // Request an ad
         adView.loadAd();
-        adV.loadAd();
         interstitialAd = new InterstitialAd(this, getString(R.string.interstitial));
         interstitialAdListener = new InterstitialAdListener() {
             @Override
@@ -158,6 +154,7 @@ public class Models extends AppCompatActivity {
                             .withAdListener(interstitialAdListener)
                             .build());
         }
+        reload.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
         String us = sharedPreferencesConfig.readClientsPhone();
         progressBar.setVisibility(View.VISIBLE);
@@ -170,22 +167,8 @@ public class Models extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     scrollView.setVisibility(View.VISIBLE);
-                    if (response.body().getBasketball() == 1){
-                        AlertDialog.Builder al = new AlertDialog.Builder(getApplicationContext());
-                        al.setTitle("Done")
-                                .setMessage("You have already done this.")
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        if (interstitialAd.isAdLoaded()){
-                                            interstitialAd.show();
-                                        }
-                                        dialogInterface.dismiss();
-                                    }
-                                });
-                        AlertDialog alertDialog = al.create();
-                        alertDialog.setCancelable(false);
-                        alertDialog.show();
+                    if (response.body().getModels() == 1){
+                        already();
                         submit.setVisibility(View.GONE);
                     }
                 } else {
@@ -203,6 +186,23 @@ public class Models extends AppCompatActivity {
             }
         });
     }
+    private void already() {
+        AlertDialog.Builder al = new AlertDialog.Builder(this);
+        al.setTitle("Done")
+                .setMessage("You have already done this.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (interstitialAd.isAdLoaded()){
+                            interstitialAd.show();
+                        }
+                        dialogInterface.dismiss();
+                    }
+                });
+        AlertDialog alertDialog = al.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
 
     private void doIt() {
         ans1 = answer1.getText().toString();
@@ -218,23 +218,24 @@ public class Models extends AppCompatActivity {
         ed3 = edit3.getText().toString();
         ed4 = edit4.getText().toString();
 
-        if (!ed1.equalsIgnoreCase(ans1) || !ed1.equalsIgnoreCase(ans1a)
-                || !ed1.equalsIgnoreCase(ans1 + " "+ans1a) || !ed1.equalsIgnoreCase(ans1a + " "+ans1)){
-            edit1.setError("Wrong");
-        }
-        if (!ed2.equalsIgnoreCase(ans2) || !ed2.equalsIgnoreCase(ans2a)
-                || !ed2.equalsIgnoreCase(ans2 + " "+ans2a) || !ed2.equalsIgnoreCase(ans2a + " "+ans2)){
-            edit2.setError("Wrong");
-        }
-        if (!ed3.equalsIgnoreCase(ans3) || !ed3.equalsIgnoreCase(ans3a)
-                || !ed3.equalsIgnoreCase(ans3 + " "+ans3a) || !ed3.equalsIgnoreCase(ans3a + " "+ans3)){
-            edit3.setError("Wrong");
-        }
-        if (!ed4.equalsIgnoreCase(ans4) || !ed4.equalsIgnoreCase(ans4a)
-                || !ed4.equalsIgnoreCase(ans4 + " "+ans4a) || !ed4.equalsIgnoreCase(ans4a + " "+ans4)){
-            edit4.setError("Wrong");
-        }else {
+        if (ed1.equalsIgnoreCase(ans1)
+                && ed2.equalsIgnoreCase(ans2)
+                && ed3.equalsIgnoreCase(ans3)
+                && ed4.equalsIgnoreCase(ans4)){
             collect();
+        }else {
+            if (!ed2.equalsIgnoreCase(ans2)) {
+                edit2.setError("Wrong");
+            }
+            if (!ed1.equalsIgnoreCase(ans1)) {
+                edit1.setError("Wrong");
+            }
+            if (!ed3.equalsIgnoreCase(ans3)) {
+                edit3.setError("Wrong");
+            }
+            if (!ed4.equalsIgnoreCase(ans4)) {
+                edit4.setError("Wrong");
+            }
         }
 
     }

@@ -7,7 +7,7 @@
     android:background="@drawable/cancan"
     tools:context=".famous.MaleMusic">
     <LinearLayout
-        android:id="@+id/banner"
+        android:id="@+id/banner_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="54dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Name the female mucisians"
+        android:text="Name the male mucisians"
         android:gravity="center"
         android:textColor="#ffffff"/>
     <ProgressBar
@@ -47,10 +47,10 @@
         android:layout_height="35dp"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:id="@+id/scroll"
-        android:layout_marginBottom="53dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progress"
         >
@@ -71,11 +71,12 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/jobless1"/>
+                    android:src="@drawable/lilwayne"/>
             </androidx.cardview.widget.CardView>
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer1"
+                android:text="Lil"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,6 +85,7 @@
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer1a"
+                android:text="Wayne"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,11 +114,12 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/jobless2"/>
+                    android:src="@drawable/future"/>
             </androidx.cardview.widget.CardView>
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer2"
+                android:text="Future"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,6 +128,7 @@
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer2a"
+                android:text="null"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -153,11 +157,12 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/notjobless"/>
+                    android:src="@drawable/wizkid"/>
             </androidx.cardview.widget.CardView>
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer3"
+                android:text="Wizkid"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -166,6 +171,7 @@
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer3a"
+                android:text="null"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -194,11 +200,12 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/jobless3"/>
+                    android:src="@drawable/justinbieber"/>
             </androidx.cardview.widget.CardView>
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer4"
+                android:text="Justin"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -207,6 +214,7 @@
             <TextView
                 android:visibility="gone"
                 android:id="@+id/answer4a"
+                android:text="Bieber"
                 android:layout_gravity="bottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -233,13 +241,5 @@
                 android:id="@+id/submit"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-    <LinearLayout
-        android:id="@+id/banner_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

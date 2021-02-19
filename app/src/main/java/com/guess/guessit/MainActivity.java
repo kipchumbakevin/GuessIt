@@ -35,6 +35,7 @@ import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdBase;
 import com.facebook.ads.NativeAdLayout;
 import com.facebook.ads.NativeAdListener;
+import com.guess.guessit.famous.FamousLanding;
 import com.guess.guessit.guessing.Actor;
 import com.guess.guessit.guessing.Landing;
 import com.guess.guessit.models.MessagesModel;
@@ -50,7 +51,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView candy,guessing,countdown,free,myPoints,info,policy;
+    TextView candy,guessing,countdown,free,myPoints,info,policy,famous;
     ImageView message;
     private AdView adViewb,adV;
     private InterstitialAd interstitialAd;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         guessing = findViewById(R.id.guessing);
         countdown = findViewById(R.id.countdown);
         message = findViewById(R.id.message);
+        famous = findViewById(R.id.famous);
         policy = findViewById(R.id.privacy);
         info = findViewById(R.id.info);
         myPoints = findViewById(R.id.mycoins);
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 interstitialAd.buildLoadAdConfig()
                         .withAdListener(interstitialAdListener)
                         .build());
-        fetchUser();
+
         countDownTimer = new CountDownTimer(60000, 1000) { // 10 seconds, in 1 second intervals
             public void onTick(long millisUntilFinished) {
                 if (!interstitialAd.isAdLoaded()){
@@ -163,6 +165,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (sharedPreferencesConfig.readClientsPhone().isEmpty()){
             requestInfo();
+        }else {
+            fetchUser();
         }
         candy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +192,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Landing.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        famous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FamousLanding.class);
                 startActivity(intent);
                 finish();
             }
@@ -254,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     fetchUser2();
                     countDownTimer.start();
-                    Toast.makeText(MainActivity.this, "You have been awarded 2 coins", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "You have been awarded 1 coin", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
                 }
@@ -297,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<UsersModel> call, Throwable t) {
                 reload.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(MainActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Network error.Check your connection", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -333,10 +345,12 @@ public class MainActivity extends AppCompatActivity {
         info.setVisibility(View.GONE);
         message.setVisibility(View.GONE);
         policy.setVisibility(View.GONE);
+        famous.setVisibility(View.GONE);
     }
     private void come() {
         candy.setVisibility(View.VISIBLE);
         guessing.setVisibility(View.VISIBLE);
+        famous.setVisibility(View.VISIBLE);
         free.setVisibility(View.VISIBLE);
         countdown.setVisibility(View.VISIBLE);
         info.setVisibility(View.VISIBLE);
@@ -378,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
                                 alertDialog.dismiss();
                                 sharedPreferencesConfig.saveAuthenticationInformation(username.getText().toString());
                                 Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                                fetchUser();
                             } else if (response.code()==200){
                                 Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                             }

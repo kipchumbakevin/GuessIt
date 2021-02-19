@@ -7,9 +7,11 @@ import androidx.cardview.widget.CardView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.facebook.ads.Ad;
@@ -39,6 +41,8 @@ public class Jobless extends AppCompatActivity {
     SharedPreferencesConfig sharedPreferencesConfig;
     ProgressBar progressBar;
     int pass;
+    ScrollView scrollView;
+    CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,7 @@ public class Jobless extends AppCompatActivity {
         actor2  =findViewById(R.id.actor2);
         actor3 = findViewById(R.id.actor3);
         actor4 = findViewById(R.id.actor4);
+        scrollView = findViewById(R.id.scroll);
         actor5 = findViewById(R.id.actor5);
         progressBar = findViewById(R.id.progress);
         sharedPreferencesConfig = new SharedPreferencesConfig(getApplicationContext());
@@ -120,6 +125,21 @@ public class Jobless extends AppCompatActivity {
                 interstitialAd.buildLoadAdConfig()
                         .withAdListener(interstitialAdListener)
                         .build());
+
+        countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFinish() {
+                progressBar.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+            }
+        }.start();
+
         actor1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -257,6 +277,7 @@ public class Jobless extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -267,7 +288,14 @@ public class Jobless extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        countDownTimer.cancel();
+        super.onPause();
+    }
+
+    @Override
     public void onBackPressed() {
+        countDownTimer.cancel();
         back = 1;
         Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){

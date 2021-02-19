@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:id="@+id/mainLayout"
-    android:background="@drawable/garden"
+    android:background="@drawable/cancan"
     android:layout_height="match_parent"
     tools:context=".Candy">
     <LinearLayout
@@ -30,13 +30,18 @@
         android:gravity="center"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="55dp">
         <TextView
             android:id="@+id/timer"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Get a score of 200 and above to get your bonus"
+            android:textColor="#fff"/>
+        <TextView
+            android:id="@+id/ttt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get a score of 200+ in 35 secs to earn 1 coin"
             android:textColor="#fff"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -54,20 +59,55 @@
                 android:id="@+id/score"
                 android:textColor="#fff"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_gravity="end"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_marginTop="5dp"
-            app:cardCornerRadius="8dp"
-            android:background="@color/white"
             android:layout_height="wrap_content">
-            <Switch
-                android:id="@+id/sound"
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="30dp"
+                android:layout_centerInParent="true"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:background="@drawable/progress"
+                android:padding="5dp" />
+            <Button
+                android:id="@+id/reload"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Sound"/>
-        </androidx.cardview.widget.CardView>
+                android:text="reload"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:layout_centerInParent="true"
+                android:layout_height="35dp" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:id="@+id/high_score"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="High score:\nBy: "/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+                <Switch
+                    android:id="@+id/sound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Sound"/>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -77,6 +117,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linLay"
         android:id="@+id/board"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"/>
 
 

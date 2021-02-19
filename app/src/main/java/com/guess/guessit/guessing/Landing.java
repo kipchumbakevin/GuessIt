@@ -317,6 +317,7 @@ public class Landing extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         back = 1;
+        Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){
             interstitialAd.show();
         }else {

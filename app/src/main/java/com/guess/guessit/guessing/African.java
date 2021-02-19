@@ -7,9 +7,11 @@ import androidx.cardview.widget.CardView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.facebook.ads.Ad;
@@ -39,6 +41,8 @@ public class African extends AppCompatActivity {
     SharedPreferencesConfig sharedPreferencesConfig;
     ProgressBar progressBar;
     int pass;
+    ScrollView scrollView;
+    CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,7 @@ public class African extends AppCompatActivity {
         actor4 = findViewById(R.id.actor4);
         actor5 = findViewById(R.id.actor5);
         progressBar = findViewById(R.id.progress);
+        scrollView = findViewById(R.id.scroll);
         sharedPreferencesConfig = new SharedPreferencesConfig(getApplicationContext());
         AudienceNetworkAds.initialize(this);
         adView = new AdView(this, getString(R.string.banner), AdSize.BANNER_HEIGHT_50);
@@ -120,6 +125,20 @@ public class African extends AppCompatActivity {
                 interstitialAd.buildLoadAdConfig()
                         .withAdListener(interstitialAdListener)
                         .build());
+        countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFinish() {
+                progressBar.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+            }
+        }.start();
+
         actor1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -256,8 +275,16 @@ public class African extends AppCompatActivity {
         alertDialog.setCancelable(false);
         alertDialog.show();
     }
+
+    @Override
+    protected void onPause() {
+        countDownTimer.cancel();
+        super.onPause();
+    }
+
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -269,6 +296,7 @@ public class African extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        countDownTimer.cancel();
         back = 1;
         Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){

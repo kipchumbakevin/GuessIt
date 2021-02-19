@@ -6,27 +6,80 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuessIt"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AnswerQuestion"/>
-        <activity android:name=".QuestionsActivity" />
-        <activity android:name=".guessing.Landing" />
-        <activity android:name=".guessing.Pet" />
-        <activity android:name=".guessing.Jobless" />
-        <activity android:name=".guessing.African" />
-        <activity android:name=".guessing.Plastic" />
-        <activity android:name=".guessing.Medicine" />
-        <activity android:name=".guessing.Car" />
-        <activity android:name=".guessing.Student" />
-        <activity android:name=".guessing.Virgin" />
-        <activity android:name=".guessing.ExConvict" />
-        <activity android:name=".guessing.Billion" />
-        <activity android:name=".guessing.Actor" />
-        <activity android:name=".Candy" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".famous.FamousLanding"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.CarLogos"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.Models"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.Basketball"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.BusinessPeople"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.Footballers"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.Presidents"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.MaleActors"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.FemaleActors"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.MaleMusic"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".famous.FemaleMusic"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AnswerQuestion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QuestionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Landing"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Pet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Jobless"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.African"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Plastic"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Medicine"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Car"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Student"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Virgin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.ExConvict"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Billion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".guessing.Actor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Candy"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

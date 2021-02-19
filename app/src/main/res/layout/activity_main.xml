@@ -35,10 +35,10 @@
         android:layout_width="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp"
-        android:layout_height="30dp"
+        app:layout_constraintTop_toBottomOf="@id/zz"
+        android:layout_marginTop="10dp"
         android:visibility="gone"
+        android:layout_height="30dp"
         android:background="@drawable/progress"
         android:padding="5dp" />
     <Button
@@ -121,6 +121,24 @@
         app:layout_constraintTop_toBottomOf="@id/countdown"
         android:background="@color/gold"/>
     <TextView
+        android:id="@+id/famous"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Famous section"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/ic_money"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/countdown"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/famous"
+        android:background="@color/gold"/>
+    <TextView
         android:id="@+id/free"
         android:text="Free coin"
         android:padding="5dp"
@@ -132,7 +150,7 @@
         android:drawableEnd="@drawable/ic_money"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/countdown"/>
+        app:layout_constraintTop_toBottomOf="@id/famous"/>
     <TextView
         android:id="@+id/info"
         android:text="For every 100 coins you get, you will receive $1. The minimum cash out coins are 200.\nNB:You are not required to deposit or send any money anywhere. BEWARE"
@@ -162,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/countdown"
+        app:layout_constraintTop_toBottomOf="@id/famous"
         android:src="@drawable/ic_message"
         android:layout_marginTop="20dp"/>
 

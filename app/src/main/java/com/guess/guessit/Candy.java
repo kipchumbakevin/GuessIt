@@ -12,9 +12,11 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +29,9 @@ import com.facebook.ads.AdView;
 import com.facebook.ads.AudienceNetworkAds;
 import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
+import com.guess.guessit.models.GetHighModel;
 import com.guess.guessit.models.MessagesModel;
+import com.guess.guessit.models.UsersModel;
 import com.guess.guessit.utils.SharedPreferencesConfig;
 
 import java.util.ArrayList;
@@ -59,17 +63,27 @@ public class Candy extends AppCompatActivity {
     SharedPreferencesConfig sharedPreferencesConfig;
     MediaPlayer mediaPlayerCrush,silent;
     int score = 0;
-    int widthOfBlock, noOfBlocks = 8, widthOfScreen;
+    int widthOfBlock, noOfBlocks = 8, widthOfScreen,highS,HH;
     Switch sound;
+    Button reload;
     ArrayList<ImageView> candy = new ArrayList<>();
-    TextView scoreR, timer;
+    TextView scoreR, timer,highScore,tttt;
     CountDownTimer countDownTimer;
+    ProgressBar progressBar;
+    GridLayout grid;
     InterstitialAdListener interstitialAdListener;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_candy);
+        highScore = findViewById(R.id.high_score);
+        progressBar = findViewById(R.id.progress);
+        reload  = findViewById(R.id.reload);
+        highS = 0;
+        tttt = findViewById(R.id.ttt);
+        grid = findViewById(R.id.board);
+        HH = 0;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         startScore = 0;
@@ -151,20 +165,25 @@ public class Candy extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
-        countDownTimer = new CountDownTimer(30000, 1000) { // 60 seconds, in 1 second intervals
+        timer.setText("Get a score of 200 in 35 secs to get 1 coin");
+        fetchHighScore();
+        createBoard();
+        countDownTimer = new CountDownTimer(35000, 1000) { // 60 seconds, in 1 second intervals
             public void onTick(long millisUntilFinished) {
+                tttt.setVisibility(View.GONE);
                 timer.setVisibility(View.VISIBLE);
                 timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 1 coin");
             }
 
             public void onFinish() {
                 alertD();
+                tttt.setVisibility(View.VISIBLE);
                 timer.setVisibility(View.GONE);
                 score = 0;
                 scoreR.setText("");
             }
         };
-        createBoard();
+
         for (final ImageView imageView : candy) {
             imageView.setOnTouchListener(new OnSwipeListener(this) {
                 @Override
@@ -230,8 +249,74 @@ public class Candy extends AppCompatActivity {
         }
         mHandler = new Handler();
         startRepeat();
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchHighScore();
+            }
+        });
     }
 
+    private void fetchHighScore() {
+        progressBar.setVisibility(View.VISIBLE);
+        reload.setVisibility(View.GONE);
+        grid.setVisibility(View.GONE);
+        String poi = "Kip";
+        Call<GetHighModel> call = RetrofitClient.getInstance(Candy.this)
+                .getApiConnector()
+                .getHigh(poi);
+        call.enqueue(new Callback<GetHighModel>() {
+            @Override
+            public void onResponse(Call<GetHighModel> call, Response<GetHighModel> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    grid.setVisibility(View.VISIBLE);
+                    highScore.setText("High score: "+response.body().getScore()+"\nBy: "+response.body().getUsername());
+                    highS = response.body().getScore();
+
+                } else {
+                    reload.setVisibility(View.VISIBLE);
+                    Toast.makeText(Candy.this, "Server error " + response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetHighModel> call, Throwable t) {
+                reload.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(Candy.this, "Network error", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+    private void fetchHighScore2() {
+        progressBar.setVisibility(View.VISIBLE);
+        reload.setVisibility(View.GONE);
+        String poi = "Kip";
+        Call<GetHighModel> call = RetrofitClient.getInstance(Candy.this)
+                .getApiConnector()
+                .getHigh(poi);
+        call.enqueue(new Callback<GetHighModel>() {
+            @Override
+            public void onResponse(Call<GetHighModel> call, Response<GetHighModel> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    highScore.setText("High score: "+response.body().getScore()+"\nBy: "+response.body().getUsername());
+                    highS = response.body().getScore();
+
+                } else {
+                    reload.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetHighModel> call, Throwable t) {
+                reload.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+
+        });
+    }
     private void checkRowForThree() {
         if (timer.isShown()) {
             for (int i = 0; i < 62; i++) {
@@ -360,6 +445,7 @@ public class Candy extends AppCompatActivity {
         }
         AlertDialog.Builder alert = new AlertDialog.Builder(Candy.this);
         final int ss = score;
+        HH = score;
         alert.setTitle(title)
                 .setMessage(failed);
         if (ss > 200) {
@@ -398,6 +484,16 @@ public class Candy extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ss > 200) {
+                    String text;
+                    if (ss>highS){
+                        text = "You have been awarded 1 coin, and you are the new highscore holder";
+                        updateScore();
+                    }else {
+                        text = "You have been awarded 1 coin";
+                    }
+                    progressBar.setVisibility(View.VISIBLE);
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                    alertDialog.setMessage("Loading... Please wait!");
                     final Toast toast = new Toast(Candy.this);
                     toast.makeText(Candy.this, "Loading...", Toast.LENGTH_LONG).show();
                     String us = sharedPreferencesConfig.readClientsPhone();
@@ -407,11 +503,17 @@ public class Candy extends AppCompatActivity {
                     call.enqueue(new Callback<MessagesModel>() {
                         @Override
                         public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
+                            progressBar.setVisibility(View.GONE);
                             if (response.code() == 201) {
+                                if (interstitialAd.isAdLoaded()){
+                                    interstitialAd.show();
+                                }
                                 toast.cancel();
                                 alertDialog.dismiss();
-                                Toast.makeText(Candy.this, "You have been awarded 1 coin", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Candy.this, text, Toast.LENGTH_LONG).show();
                             } else {
+                                alertDialog.setMessage("An error occurred. Retry");
+                                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                                 toast.cancel();
                                 Toast.makeText(Candy.this, "Server error", Toast.LENGTH_SHORT).show();
                             }
@@ -420,6 +522,9 @@ public class Candy extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<MessagesModel> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                            alertDialog.setMessage("You need to be internet connected to claim your point");
+                            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                             toast.cancel();
                             Toast.makeText(Candy.this, "Network error. Check connection", Toast.LENGTH_LONG).show();
                         }
@@ -427,6 +532,32 @@ public class Candy extends AppCompatActivity {
                 } else {
                     alertDialog.dismiss();
                 }
+            }
+        });
+    }
+
+    private void updateScore() {
+        progressBar.setVisibility(View.VISIBLE);
+        String us = sharedPreferencesConfig.readClientsPhone();
+        String s = Integer.toString(HH);
+        Call<MessagesModel> call = RetrofitClient.getInstance(Candy.this)
+                .getApiConnector()
+                .insert(us,s);
+        call.enqueue(new Callback<MessagesModel>() {
+            @Override
+            public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.code()==201) {
+                    fetchHighScore2();
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<MessagesModel> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

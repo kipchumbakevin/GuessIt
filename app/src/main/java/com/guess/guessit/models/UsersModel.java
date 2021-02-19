@@ -52,6 +52,9 @@ public class UsersModel {
     @SerializedName("pass")
     @Expose
     private Integer pass;
+    @SerializedName("activity")
+    @Expose
+    private Integer activity;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -185,6 +188,13 @@ public class UsersModel {
 
     public void setPass(Integer pass) {
         this.pass = pass;
+    }
+    public Integer getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Integer activity) {
+        this.activity = activity;
     }
 
     public String getCreatedAt() {

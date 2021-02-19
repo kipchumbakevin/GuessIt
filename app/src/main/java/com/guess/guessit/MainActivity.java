@@ -295,6 +295,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
+                    if (response.body().getActivity() == 1){
+                        invalidA();
+                    }
                     coins = response.body().getPoints();
                     myPoints.setText(response.body().getPoints() + "");
                     myPoints.setVisibility(View.VISIBLE);
@@ -314,6 +317,22 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
+    private void invalidA() {
+        AlertDialog.Builder al = new AlertDialog.Builder(this);
+        al.setTitle("Invalid activity!")
+                .setMessage("Our systems have detected an invalid activity in your account. This occurs when a user fraudulently tries to get more coins.\nWe are conducting and investigation. This may take a while.")
+                .setPositiveButton("Got It", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        AlertDialog alertDialog = al.create();
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
+
     public void fetchUser2() {
         String us = sharedPreferencesConfig.readClientsPhone();
         Call<UsersModel> call = RetrofitClient.getInstance(MainActivity.this)

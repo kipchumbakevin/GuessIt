@@ -44,7 +44,7 @@ public class AnswerQuestion extends AppCompatActivity {
     int pass,t;
     String id,qq,aa;
     ProgressBar progressBar;
-    CountDownTimer countDownTimer;
+    CountDownTimer countDownTimer,countDownTimer1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +150,20 @@ public class AnswerQuestion extends AppCompatActivity {
                 alertDialog.show();
             }
         };
-        fetchUser();
+        countDownTimer1 = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                answer.setVisibility(View.GONE);
+                quiz.setVisibility(View.GONE);
+                submit.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                fetchUser();
+            }
+        }.start();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -319,7 +332,21 @@ public class AnswerQuestion extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        countDownTimer1.cancel();
         countDownTimer.cancel();
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        countDownTimer1.cancel();
+        if (adView != null){
+            adView.destroy();
+        }
+        if (interstitialAd != null){
+            interstitialAd.destroy();
+        }
+        countDownTimer.cancel();
+        super.onDestroy();
     }
 }

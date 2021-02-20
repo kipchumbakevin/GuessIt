@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -49,6 +50,7 @@ public class FamousLanding extends AppCompatActivity {
     private InterstitialAd interstitialAd;
     InterstitialAdListener interstitialAdListener;
     ScrollView scrollView;
+    CountDownTimer countDownTimer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +139,18 @@ public class FamousLanding extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
-        insertFame();
+        countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFinish() {
+                insertFame();
+            }
+        }.start();
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -259,6 +272,7 @@ public class FamousLanding extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -270,6 +284,7 @@ public class FamousLanding extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        countDownTimer.cancel();
         back = 1;
         Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){

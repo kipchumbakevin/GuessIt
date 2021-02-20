@@ -126,7 +126,7 @@ public class Plastic extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
-        countDownTimer = new CountDownTimer(5000,1000) {
+        countDownTimer = new CountDownTimer(8000,1000) {
             @Override
             public void onTick(long l) {
                 progressBar.setVisibility(View.VISIBLE);

@@ -153,7 +153,7 @@
         app:layout_constraintTop_toBottomOf="@id/famous"/>
     <TextView
         android:id="@+id/info"
-        android:text="For every 100 coins you get, you will receive $1. The minimum cash out coins are 500.\nNB:You are not required to deposit or send any money anywhere. BEWARE"
+        android:text="For every 200 coins you get, you will receive $1. The minimum cash out coins are 600.\nNB:You are not required to deposit or send any money anywhere. BEWARE"
         android:padding="5dp"
         android:gravity="center"
         android:textSize="12sp"

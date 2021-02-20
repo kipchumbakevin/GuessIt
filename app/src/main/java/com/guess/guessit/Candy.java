@@ -68,7 +68,7 @@ public class Candy extends AppCompatActivity {
     Button reload;
     ArrayList<ImageView> candy = new ArrayList<>();
     TextView scoreR, timer,highScore,tttt;
-    CountDownTimer countDownTimer;
+    CountDownTimer countDownTimer,countDownTimer1;
     ProgressBar progressBar;
     GridLayout grid;
     InterstitialAdListener interstitialAdListener;
@@ -166,7 +166,18 @@ public class Candy extends AppCompatActivity {
                         .build());
 
         timer.setText("Get a score of 200 in 35 secs to get 1 coin");
-        fetchHighScore();
+        countDownTimer1 = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+                grid.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFinish() {
+                fetchHighScore();
+            }
+        }.start();
         createBoard();
         countDownTimer = new CountDownTimer(35000, 1000) { // 60 seconds, in 1 second intervals
             public void onTick(long millisUntilFinished) {
@@ -594,6 +605,7 @@ public class Candy extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        countDownTimer1.cancel();
         countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
@@ -607,6 +619,7 @@ public class Candy extends AppCompatActivity {
     public void onBackPressed() {
         back = 1;
         countDownTimer.cancel();
+        countDownTimer1.cancel();
         Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){
             interstitialAd.show();

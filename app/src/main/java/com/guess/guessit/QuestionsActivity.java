@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -39,6 +40,7 @@ public class QuestionsActivity extends AppCompatActivity {
     InterstitialAdListener interstitialAdListener;
     int back;
     private AdView adView,adV;
+    CountDownTimer countDownTimer;
     Button reload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +120,17 @@ public class QuestionsActivity extends AppCompatActivity {
                 interstitialAd.buildLoadAdConfig()
                         .withAdListener(interstitialAdListener)
                         .build());
-        getQuestions();
+        countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                getQuestions();
+            }
+        }.start();
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +141,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -139,7 +152,15 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        countDownTimer.cancel();
+        super.onPause();
+    }
+
+
+    @Override
     public void onBackPressed() {
+        countDownTimer.cancel();
         back = 1;
         Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){

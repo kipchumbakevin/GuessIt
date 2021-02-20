@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -41,6 +42,7 @@ public class Landing extends AppCompatActivity {
     String ac,bi,co,vi,st,ex,me,pl,af,jo,pe;
     ProgressBar progressBar;
     SharedPreferencesConfig sharedPreferencesConfig;
+    CountDownTimer countDownTimer;
     Button reload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +130,19 @@ public class Landing extends AppCompatActivity {
                 interstitialAd.buildLoadAdConfig()
                         .withAdListener(interstitialAdListener)
                         .build());
-        fetchUser();
+
+        countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+                go();
+            }
+
+            @Override
+            public void onFinish() {
+                fetchUser();
+            }
+        }.start();
         one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -305,6 +319,7 @@ public class Landing extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -316,6 +331,7 @@ public class Landing extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        countDownTimer.cancel();
         back = 1;
         Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
         if (interstitialAd.isAdLoaded()){

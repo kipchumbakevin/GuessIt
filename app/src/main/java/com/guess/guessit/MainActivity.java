@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     Button reload;
     private LinearLayout adView;
     int freeCoins,coins;
-    CountDownTimer countDownTimer;
+    CountDownTimer countDownTimer,countDownTimer1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,6 +144,18 @@ public class MainActivity extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
+        countDownTimer1 = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                progressBar.setVisibility(View.VISIBLE);
+                go();
+            }
+
+            @Override
+            public void onFinish() {
+                fetchUser();
+            }
+        };
         countDownTimer = new CountDownTimer(60000, 1000) { // 10 seconds, in 1 second intervals
             public void onTick(long millisUntilFinished) {
                 if (!interstitialAd.isAdLoaded()){
@@ -166,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPreferencesConfig.readClientsPhone().isEmpty()){
             requestInfo();
         }else {
-            fetchUser();
+            countDownTimer1.start();
         }
         candy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -435,6 +447,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        countDownTimer1.cancel();
         if (adViewb != null){
             adViewb.destroy();
         }
@@ -447,6 +460,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        countDownTimer1.cancel();
         countDownTimer.cancel();
         super.onBackPressed();
     }

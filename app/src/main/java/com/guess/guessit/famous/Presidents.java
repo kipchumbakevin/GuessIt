@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class Presidents extends AppCompatActivity {
     String ans1,ans1a,ans2,ans2a,ans3,ans3a,ans4,ans4a,ed1,ed2,ed3,ed4;
     private AdView adView;
     int back;
+    CountDownTimer countDownTimer;
     private InterstitialAd interstitialAd;
     InterstitialAdListener interstitialAdListener;
     SharedPreferencesConfig sharedPreferencesConfig;
@@ -128,7 +130,18 @@ public class Presidents extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
-        checkFame();
+        countDownTimer = new CountDownTimer(5000,1000) {
+            @Override
+            public void onTick(long l) {
+                scrollView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFinish() {
+                checkFame();
+            }
+        }.start();
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -270,6 +283,7 @@ public class Presidents extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
+        countDownTimer.cancel();
         if (adView != null){
             adView.destroy();
         }
@@ -281,6 +295,7 @@ public class Presidents extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        countDownTimer.cancel();
         Intent intent = new Intent(getApplicationContext(), FamousLanding.class);
         startActivity(intent);
         finish();

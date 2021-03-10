@@ -22,12 +22,8 @@ import com.facebook.ads.AudienceNetworkAds;
 import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
 import com.guess.guessit.models.MessagesModel;
-import com.guess.guessit.models.QuestionsModel;
 import com.guess.guessit.models.UsersModel;
 import com.guess.guessit.utils.SharedPreferencesConfig;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

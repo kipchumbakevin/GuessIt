@@ -10,7 +10,6 @@
         android:textIsSelectable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/colorPrimary"
         android:text="Follow us on instagram @guessit_game and send us your username and payment details. We will verify your details and get back to you." />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

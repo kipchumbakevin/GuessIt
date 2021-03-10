@@ -2,6 +2,7 @@ package com.guess.guessit;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -13,6 +14,9 @@ import android.os.Handler;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,15 +48,15 @@ import com.guess.guessit.utils.SharedPreferencesConfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
-    TextView candy,guessing,countdown,free,myPoints,info,policy,famous;
-    ImageView message;
+    TextView free,myPoints,info,policy;
+    ImageView message,purple,red,green,yelow,g1,g2,g3,g4,gg1,gg2,gg3,gg4,ggg1,ggg2,ggg3,ggg4;
     private AdView adViewb,adV;
     private InterstitialAd interstitialAd;
     InterstitialAdListener interstitialAdListener;
@@ -61,15 +65,35 @@ public class MainActivity extends AppCompatActivity {
     private NativeAdLayout nativeAdLayout;
     ProgressBar progressBar;
     Button reload;
+    RotateAnimation rotate;
     private LinearLayout adView;
+    int degree = 0, degree_old = 0;
+    Random r;
+    CardView candy,guessing,countdown,famous;
     int freeCoins,coins;
-    CountDownTimer countDownTimer,countDownTimer1;
+    CountDownTimer countDownTimer,countDownTimer1,iii;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         candy = findViewById(R.id.candy);
         guessing = findViewById(R.id.guessing);
+        purple = findViewById(R.id.purple);
+        red = findViewById(R.id.red);
+        g1 = findViewById(R.id.g1);
+        g2 = findViewById(R.id.g2);
+        g3 = findViewById(R.id.g3);
+        g4 = findViewById(R.id.g4);
+        gg1 = findViewById(R.id.gg1);
+        gg2 = findViewById(R.id.gg2);
+        gg3 = findViewById(R.id.gg3);
+        gg4 = findViewById(R.id.gg4);
+        ggg1 = findViewById(R.id.ggg1);
+        ggg2 = findViewById(R.id.ggg2);
+        ggg3 = findViewById(R.id.ggg3);
+        ggg4 = findViewById(R.id.ggg4);
+        green = findViewById(R.id.green);
+        yelow = findViewById(R.id.yellow);
         countdown = findViewById(R.id.countdown);
         message = findViewById(R.id.message);
         famous = findViewById(R.id.famous);
@@ -174,8 +198,16 @@ public class MainActivity extends AppCompatActivity {
                 free.setText("Free coin");
             }
         };
-
+        r = new Random();
+        degree_old = degree % 360;
+        degree = r.nextInt(3600) + 720;
+        rotate = new RotateAnimation(degree_old, degree,
+                RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(1000);
+        rotate.setFillAfter(true);
+        rotate.setInterpolator(new DecelerateInterpolator());
         if (sharedPreferencesConfig.readClientsPhone().isEmpty()){
+            go();
             requestInfo();
         }else {
             countDownTimer1.start();
@@ -183,9 +215,40 @@ public class MainActivity extends AppCompatActivity {
         candy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Candy.class);
-                startActivity(intent);
-                finish();
+                rotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        iii = new CountDownTimer(500,500) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Intent intent = new Intent(MainActivity.this,Candy.class);
+                                startActivity(intent);
+                                finish();
+                                animation.cancel();
+                            }
+                        }.start();
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                purple.startAnimation(rotate);
+                red.startAnimation(rotate);
+                green.startAnimation(rotate);
+                yelow.startAnimation(rotate);
             }
         });
         reload.setOnClickListener(new View.OnClickListener() {
@@ -203,25 +266,119 @@ public class MainActivity extends AppCompatActivity {
         guessing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Landing.class);
-                startActivity(intent);
-                finish();
+
+                rotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        iii = new CountDownTimer(500,500) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Intent intent = new Intent(MainActivity.this, Landing.class);
+                                startActivity(intent);
+                                finish();
+                                animation.cancel();
+                            }
+                        }.start();
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                g1.startAnimation(rotate);
+                g2.startAnimation(rotate);
+                g3.startAnimation(rotate);
+                g4.startAnimation(rotate);
+
             }
         });
         famous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FamousLanding.class);
-                startActivity(intent);
-                finish();
+                rotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        iii = new CountDownTimer(500,500) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Intent intent = new Intent(MainActivity.this, FamousLanding.class);
+                                startActivity(intent);
+                                finish();
+                                animation.cancel();
+                            }
+                        }.start();
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                ggg1.startAnimation(rotate);
+                ggg2.startAnimation(rotate);
+                ggg3.startAnimation(rotate);
+                ggg4.startAnimation(rotate);
             }
         });
         countdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, QuestionsActivity.class);
-                startActivity(intent);
-                finish();
+                rotate.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        iii = new CountDownTimer(500,500) {
+                            @Override
+                            public void onTick(long l) {
+
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Intent intent = new Intent(MainActivity.this, QuestionsActivity.class);
+                                startActivity(intent);
+                                finish();
+                                animation.cancel();
+                            }
+                        }.start();
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                gg1.startAnimation(rotate);
+                gg2.startAnimation(rotate);
+                gg3.startAnimation(rotate);
+                gg4.startAnimation(rotate);
             }
         });
         message.setOnClickListener(new View.OnClickListener() {
@@ -382,7 +539,9 @@ public class MainActivity extends AppCompatActivity {
         candy.setVisibility(View.VISIBLE);
         guessing.setVisibility(View.VISIBLE);
         famous.setVisibility(View.VISIBLE);
-        free.setVisibility(View.VISIBLE);
+        if (interstitialAd.isAdLoaded()){
+            free.setVisibility(View.VISIBLE);
+        }
         countdown.setVisibility(View.VISIBLE);
         info.setVisibility(View.VISIBLE);
         message.setVisibility(View.VISIBLE);
@@ -448,6 +607,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         countDownTimer1.cancel();
+        rotate.cancel();
         if (adViewb != null){
             adViewb.destroy();
         }
@@ -457,9 +617,9 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer.cancel();
         super.onDestroy();
     }
-
     @Override
     public void onBackPressed() {
+        rotate.cancel();
         countDownTimer1.cancel();
         countDownTimer.cancel();
         super.onBackPressed();

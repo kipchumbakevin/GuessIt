@@ -10,28 +10,44 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GuessIt"
         android:usesCleartextTraffic="true">
-        <activity android:name=".famous.FamousLanding"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.CarLogos"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.Models"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.Basketball"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.BusinessPeople"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.Footballers"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.Presidents"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.MaleActors"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.FemaleActors"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.MaleMusic"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".famous.FemaleMusic"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/Theme.GuessIt.Fullscreen"></activity>
+        <activity
+            android:name=".famous.FamousLanding"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.CarLogos"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.Models"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.Basketball"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.BusinessPeople"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.Footballers"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.Presidents"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.MaleActors"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.FemaleActors"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.MaleMusic"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".famous.FemaleMusic"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AnswerQuestion"
             android:screenOrientation="portrait" />

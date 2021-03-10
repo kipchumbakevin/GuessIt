@@ -1,30 +1,21 @@
 package com.guess.guessit.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.guess.guessit.AnswerQuestion;
-import com.guess.guessit.QuestionsActivity;
 import com.guess.guessit.R;
-import com.guess.guessit.RetrofitClient;
 import com.guess.guessit.models.QuestionsModel;
 import com.guess.guessit.utils.SharedPreferencesConfig;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GetQuestionsAdapter extends RecyclerView.Adapter<GetQuestionsAdapter.ViewHolder> {
     private final Context mContext;

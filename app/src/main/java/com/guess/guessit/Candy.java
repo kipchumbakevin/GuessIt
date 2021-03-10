@@ -165,7 +165,7 @@ public class Candy extends AppCompatActivity {
                         .withAdListener(interstitialAdListener)
                         .build());
 
-        timer.setText("Get a score of 200 in 35 secs to get 1 coin");
+        timer.setText("Get a score of 200 in 35 secs to get 10 coins");
         countDownTimer1 = new CountDownTimer(5000,1000) {
             @Override
             public void onTick(long l) {
@@ -183,7 +183,7 @@ public class Candy extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {
                 tttt.setVisibility(View.GONE);
                 timer.setVisibility(View.VISIBLE);
-                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 1 coin");
+                timer.setText("Get a score of 200 in " + millisUntilFinished / 1000 + " secs" + " to get 10 coins");
             }
 
             public void onFinish() {
@@ -443,7 +443,7 @@ public class Candy extends AppCompatActivity {
                                 .build());
             }
             title = "Hooray!.";
-            failed = "Congrats! You have reached the target, your score is " + score + "\nYou have received 1 coin.";
+            failed = "Congrats! You have reached the target, your score is " + score + "\nYou have received 10 coin.";
         } else {
             if (!interstitialAd.isAdLoaded()) {
                 interstitialAd.loadAd(

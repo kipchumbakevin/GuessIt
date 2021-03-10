@@ -6,5 +6,8 @@
     <string name="CLIENTS_NAME">com.fundraiser.fundraiser.utils.sharedpref.name</string>
     <string name="banner">239889781062603_239891304395784</string>
     <string name="interstitial">239889781062603_239890431062538</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
     <!--    <string name="rectangle">IMG_16_9_APP_INSTALL#239889781062603_239892134395701</string>-->
 </resources>
